@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vietnamese Text-to-Speech</title>
+</head>
+<body>
+  <input id="textInput" type="text" placeholder="Nhập văn bản ở đây" />
+  <button id="speakBtn">Speak</button>
+
+  <script>
+    document.getElementById('speakBtn').addEventListener('click', function() {
+      const text = document.getElementById('textInput').value;
+      if (text.trim() === '') return;
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'vi-VN';
+      speechSynthesis.speak(utterance);
+    });
+  </script>
+</body>
+</html>

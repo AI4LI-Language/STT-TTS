@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <script>
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!window.SpeechRecognition) {
+      console.error("Trình duyệt không hỗ trợ Web Speech API.");
+    } else {
+      const recognition = new SpeechRecognition();
+
+      // Cấu hình
+      recognition.lang = "vi-VN";         // Tiếng Việt
+      recognition.continuous = true;      // Tiếp tục lắng nghe cho đến khi dừng
+      recognition.interimResults = true; 
+
+      recognition.onstart = () => {
+        console.log("Bắt đầu nhận diện giọng nói...");
+      };
+
+      recognition.onerror = (event) => {
+        console.error("Lỗi nhận diện:", event.error);
+      };
+
+      recognition.onend = () => {
+        console.log("Nhận diện đã dừng. Tự động khởi động lại...");
+        recognition.start(); // Tự tái khởi động để giữ continuous
+      };
+
+      recognition.onresult = (event) => {
+        let transcript = "";
+
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          const chunk = event.results[i][0].transcript;
+          transcript += chunk;
+        }
+
+        console.clear();
+        console.log(transcript);
+      };
+      recognition.start();
+    }
+  </script>
+</body>
+</html>
